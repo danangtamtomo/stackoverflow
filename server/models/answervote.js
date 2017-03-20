@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         // associations can be defined here
-        AnswerVote.belongsTo(models.AnswerVote)
+        AnswerVote.belongsTo(models.Answer)
         AnswerVote.belongsTo(models.User)
       }
     }

@@ -14,9 +14,13 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "moment": "^2.18.0",
+    "tinymce-vue-2": "0.0.2",
     "vue": "^2.2.2",
     "vue-axios": "^2.0.1",
-    "vue-router": "^2.2.0"
+    "vue-momentjs": "^0.1.0",
+    "vue-router": "^2.2.0",
+    "vue-tinymce": "^1.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

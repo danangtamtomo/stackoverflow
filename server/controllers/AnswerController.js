@@ -1,14 +1,33 @@
 var models = require('../models')
 var Answer = models.Answer
 var AnswerVote = models.AnswerVote
+var User = models.User
+var Profile = models.Profile
 
 var AnswerController = {}
+
+AnswerController.getAnswersOfQuestion = function (req, res, next) {
+  Answer.findAll({
+    where: {QuestionId: req.params.questionId},
+    include: [
+      {model: User, include: [{model: Profile}]},
+      {model: AnswerVote}
+    ],
+    order: [['createdAt','ASC']]
+  })
+    .then(function (answersOfQuestion) {
+      res.send(answersOfQuestion)
+    })
+    .catch(function (err) {
+      res.send(err.message)
+    })
+}
 
 AnswerController.getAnswers = function (req, res, next) {
   Answer.findAll({
     include: [{
       model: AnswerVote
-    }]
+    }],
   })
     .then(function (answers) {
       if (!answers) {

@@ -6,6 +6,7 @@ var router = express.Router()
 const AnswerController = require('../controllers/AnswerController')
 
 router.get('/', AnswerController.getAnswers)
+router.get('/of/question/:questionId', AnswerController.getAnswersOfQuestion)
 router.get('/:id', AnswerController.getAnswer)
 router.post('/', AnswerController.createAnswer)
 router.put('/:id', AnswerController.updateAnswer)

@@ -9,6 +9,8 @@ module.exports = function (sequelize, DataTypes) {
       associate: function (models) {
         // associations can be defined here
         Answer.belongsTo(models.User)
+        Answer.belongsTo(models.Question)
+        Answer.hasMany(models.AnswerVote)
       }
     }
   })

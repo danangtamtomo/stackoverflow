@@ -1,5 +1,5 @@
 <template>
-  <div id="main-content">
+  <div :duration="{ enter: 500, leave: 800 }" id="main-content">
     <router-view></router-view>
   </div>
 </template>
@@ -9,6 +9,7 @@
 
 <style>
   #main-content {
+    margin: auto;
     width: 65%;
     display: flex;
     flex-direction: column;

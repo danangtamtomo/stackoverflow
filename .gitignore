@@ -104,5 +104,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-.gitignore
+.DS_Store
 .idea/

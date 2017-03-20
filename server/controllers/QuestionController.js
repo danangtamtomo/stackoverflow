@@ -1,14 +1,21 @@
 var models = require('../models')
 var Question = models.Question
 var QuestionVote = models.QuestionVote
+var User = models.User
+var Profile = models.Profile
 
 var QuestionController = {}
 
 QuestionController.getQuestions = function (req, res, next) {
   Question.findAll({
-    include: [{
-      model: QuestionVote
-    }]
+    include: [
+      {
+        model: QuestionVote
+      },
+      {
+        model: User
+      }
+    ]
   })
     .then(function (questions) {
       if (!questions) {
@@ -19,7 +26,12 @@ QuestionController.getQuestions = function (req, res, next) {
 }
 
 QuestionController.getQuestion = function (req, res, next) {
-  Question.findById(req.params.id)
+  Question.findOne({
+    where: {id: req.params.id},
+    include: [
+      {model: User, include: [{model: Profile}]}
+    ]
+  })
     .then(function (question) {
       res.send(question)
     })
