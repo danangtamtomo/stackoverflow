@@ -20,14 +20,14 @@
       </div>
     </div>
     <h2 style="margin-left: 15px; text-align: left;">Answers</h2>
-    <app-answer-of-question :answers="answers"></app-answer-of-question>
+      <app-answer-of-question v-for="answer in answers" :answer="answer"></app-answer-of-question>
     <div class="pre-answer answer-container" v-if="answer">
       <div class="answer-item">
         {{ answer }}
       </div>
     </div>
     <h2 style="margin-left: 15px; text-align: left; margin-top: 50px;">Answer question</h2>
-    <textarea wrap="off" cols="172" rows="10" v-model="answer"></textarea>
+    <textarea wrap="off" cols="100" rows="10" v-model="answer"></textarea>
     <button class="default-button" v-on:click="createAnswer">Answer</button>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
     createAnswer() {
       this.axios.post('http://localhost:3000/answer', {
         QuestionId: this.$route.params.id,
-        UserId: 2,
+        UserId: 1,
         answerContent: this.answer,
       })
         .then(() => {

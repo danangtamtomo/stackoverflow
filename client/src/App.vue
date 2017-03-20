@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <app-header></app-header>
+    <keep-alive>
+      <app-header></app-header>
+    </keep-alive>
     <main-content></main-content>
   </div>
 </template>

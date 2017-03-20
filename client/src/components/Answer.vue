@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="answer-container" v-for="answer in answers">
+    <div class="answer-container">
       <div class="answer-item">
         <div class="vote">
           <div class="vote-up"></div>
@@ -11,7 +11,7 @@
         {{ answer.answerContent }}
       </div>
       <div class="answer-item answer-description">
-        answered {{ getTimeFromNow(answer.createdAt) }}
+        answered {{ getTimeFromNow }}
         <br>
         by {{ answer.User.Profile.displayName }}
       </div>
@@ -23,16 +23,17 @@
 
   export default {
     name: 'Answer',
-    props: ['answers'],
+    props: ['answer'],
     data() {
       return {
-        answer: '',
       };
     },
-    methods: {
-      getTimeFromNow(datetime) {
-        return this.$moment(datetime).fromNow();
+    computed: {
+      getTimeFromNow() {
+        return this.$moment(this.createdAt).fromNow();
       },
+    },
+    methods: {
     },
   };
 </script>

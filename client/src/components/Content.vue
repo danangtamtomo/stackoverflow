@@ -1,6 +1,8 @@
 <template>
-  <div :duration="{ enter: 500, leave: 800 }" id="main-content">
-    <router-view></router-view>
+  <div id="main-content">
+     <transition name="fade" appear>
+      <router-view v-cloak></router-view>
+    </transition>
   </div>
 </template>
 <script>
@@ -22,5 +24,23 @@
     padding: 5px;
     margin-bottom: 5px;
     display: flex;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition-property: opacity;
+    transition-duration: .25s;
+  }
+
+  .fade-enter-active {
+    transition-delay: .25s;
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0;
+    transition-duration: .25s;
+    transition-delay: .25s;
+  }
+  
+  [v-cloak] {
+    display: none;
   }
 </style>

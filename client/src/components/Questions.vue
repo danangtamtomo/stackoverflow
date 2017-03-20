@@ -10,7 +10,7 @@
         <p>answers</p>
       </span>
       <span class="stack-span-item stack-span-title">
-        <a href="" @click="getQuestion(question.id)">{{ question.title }}</a>
+        <a :href="'question/'+question.id">{{ question.title }}</a>
       </span>
       <span class="stack-span-item stack-span-time">
         {{ getTimeFromNow(question.createdAt) }}
