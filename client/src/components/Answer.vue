@@ -3,6 +3,9 @@
     <div class="answer-container">
       <div class="answer-item">
         <div class="vote">
+          <span>
+           {{ voteCount }}
+          </span>
           <div class="vote-up"></div>
           <div class="vote-down"></div>
         </div>
@@ -13,7 +16,7 @@
       <div class="answer-item answer-description">
         answered {{ getTimeFromNow }}
         <br>
-        by {{ answer.User.Profile.displayName }}
+        by {{ answer.User.Profile != null ? answer.User.Profile.displayName  : 'Unknown' }}
       </div>
     </div>
   </div>
@@ -26,6 +29,7 @@
     props: ['answer'],
     data() {
       return {
+        voteCount: 0,
       };
     },
     computed: {
@@ -34,18 +38,20 @@
       },
     },
     methods: {
+      countVotes() {
+        this.$http.get(`http://localhost:3000/answer/vote/count/${this.answer.id}`)
+          .then((response) => {
+            this.voteCount = response.data.count;
+          });
+      },
+    },
+    mounted() {
+      this.countVotes();
     },
   };
 </script>
 
 <style>
-  textarea {
-    background: #90acba;
-    border: solid thin #ccc;
-    padding: 10px;
-    color: white;
-    font-size: 14px;
-  }
   .default-button {
     width: 150px;
     height: 30px;

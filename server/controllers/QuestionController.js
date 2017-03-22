@@ -3,6 +3,7 @@ var Question = models.Question
 var QuestionVote = models.QuestionVote
 var User = models.User
 var Profile = models.Profile
+var Answer = models.Answer
 
 var QuestionController = {}
 
@@ -10,11 +11,14 @@ QuestionController.getQuestions = function (req, res, next) {
   Question.findAll({
     include: [
       {
+        model: Answer
+      },
+      {
         model: QuestionVote
       },
       {
         model: User
-      }
+      },
     ]
   })
     .then(function (questions) {
@@ -92,4 +96,54 @@ QuestionController.deleteQuestion = function (req, res, next) {
     })
 }
 
+QuestionController.voteQuestion = function (req, res, next) {
+  Question.create(req.body)
+    .then(function (questionVote) {
+      console.log(questionVote)
+      res.send({
+        message: 'Voted successfully'
+      })
+    })
+    .catch(function (err) {
+      console.log(err)
+      res.send({
+        status: 'Error',
+        message: err.message
+      })
+    })
+}
+
+QuestionController.countVote = function (req, res ,next) {
+  Question.findById(req.params.id)
+    .then(function (question) {
+
+      question.getQuestionVotes({ where: {
+          voteType : 'up'
+         } })
+        .then(function (voteUps) {
+
+          question.getQuestionVotes({ where: {
+            voteType: 'down'
+          } })
+            .then(function (voteDowns) {
+
+              res.send({
+                count: voteUps.length - voteDowns.length
+              })
+
+            })
+            .catch(function (err) {
+              console.log(err)
+            })
+
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+}
 module.exports = QuestionController

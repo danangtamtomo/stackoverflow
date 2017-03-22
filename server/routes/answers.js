@@ -11,6 +11,7 @@ router.get('/:id', AnswerController.getAnswer)
 router.post('/', AnswerController.createAnswer)
 router.put('/:id', AnswerController.updateAnswer)
 router.delete('/:id', AnswerController.deleteAnswer)
-
+router.post('/vote', AnswerController.voteAnswer)
+router.get('/vote/count/:id', AnswerController.countVote)
 module.exports = router
 

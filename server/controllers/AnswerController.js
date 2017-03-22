@@ -106,4 +106,53 @@ AnswerController.deleteAnswer = function (req, res, next) {
     })
 }
 
+AnswerController.voteAnswer= function (req, res, next) {
+  AnswerVote.create(req.body)
+    .then(function (answerVote) {
+      res.send({
+        message: 'Voted successfully'
+      })
+    })
+    .catch(function (err) {
+      console.log(err)
+      res.send({
+        status: 'Error',
+        message: err.message
+      })
+    })
+}
+
+AnswerController.countVote = function (req, res ,next) {
+  Answer.findById(req.params.id)
+    .then(function (answer) {
+
+      answer.getAnswerVotes({ where: {
+        voteType : 'up'
+      } })
+        .then(function (voteUps) {
+
+          answer.getAnswerVotes({ where: {
+            voteType: 'down'
+          } })
+            .then(function (voteDowns) {
+
+              res.send({
+                count: voteUps.length - voteDowns.length
+              })
+
+            })
+            .catch(function (err) {
+              console.log(err)
+            })
+
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+}
 module.exports = AnswerController

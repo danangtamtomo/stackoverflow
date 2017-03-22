@@ -39,7 +39,7 @@
     transition-duration: .25s;
     transition-delay: .25s;
   }
-  
+
   [v-cloak] {
     display: none;
   }

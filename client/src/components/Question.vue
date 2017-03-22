@@ -1,11 +1,16 @@
 <template>
   <div style="margin: 5px;">
     <div class="question-container">
+      <router-link to="/">
+        <button class="default-button">
+          Back
+          </button>
+      </router-link>
       <div class="question-title">
         <h2>{{ question.title }}</h2>
       </div>
       <div class="question-body">
-        12
+        {{ voteCount }}
         <div class="vote">
           <div class="vote-up"></div>
           <div class="vote-down"></div>
@@ -15,7 +20,7 @@
         </div>
         <div class="question-footer">
           <p>asked {{ this.$moment(question.createdAt).fromNow() }}</p>
-          <p>by {{ question.User.Profile.displayName }}</p>
+          <p>by {{ answer.User != null ? answer.User.Profile.displayName  : 'Unknown' }}</p>
         </div>
       </div>
     </div>
@@ -27,7 +32,7 @@
       </div>
     </div>
     <h2 style="margin-left: 15px; text-align: left; margin-top: 50px;">Answer question</h2>
-    <textarea wrap="off" cols="100" rows="10" v-model="answer"></textarea>
+    <textarea  cols="100" rows="10" v-model="answer"></textarea>
     <button class="default-button" v-on:click="createAnswer">Answer</button>
   </div>
 </template>
@@ -45,6 +50,7 @@ export default {
       question: [],
       answers: [],
       answer: '',
+      voteCount: 0,
     };
   },
   methods: {
@@ -77,10 +83,17 @@ export default {
           this.answer = '';
         });
     },
+    countVotes() {
+      this.$http.get(`http://localhost:3000/question/vote/count/${this.$route.params.id}`)
+        .then((response) => {
+          this.voteCount = response.data.count;
+        });
+    },
   },
   mounted() {
     this.getQuestion(this.$route.params.id);
     this.getAnswersOfQuestion();
+    this.countVotes();
   },
 };
 </script>
@@ -159,5 +172,4 @@ export default {
     background-size: 50px;
     background-position: 0px -35px;
   }
-
 </style>
