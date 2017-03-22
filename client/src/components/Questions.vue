@@ -1,29 +1,30 @@
 <template>
-  <div class="container">
-    <input type="search" placeholder="Search..">
-      <ul>
-        <app-question-item v-for="question in questions" :question="question"></app-question-item>
-      </ul>
-    <h2 style="margin-left: 15px; text-align: left; margin-top: 50px;">Create Question</h2>
-    <input type="text" v-model="inputTitle">
-    <textarea  cols="100" rows="10" v-model="inputQuestion"></textarea>
-    <button class="default-button" v-on:click="createQuestion">Create Question</button>
-  </div>
+  <ul>
+    <li v-for="question in questions">
+      <span class="stack-span-item">
+        <p>{{ question.votes }}</p>
+        <p>votes</p>
+      </span>
+      <span class="stack-span-item">
+        <p>0</p>
+        <p>answers</p>
+      </span>
+      <span class="stack-span-item stack-span-title">
+        <a :href="'question/'+question.id">{{ question.title }}</a>
+      </span>
+      <span class="stack-span-item stack-span-time">
+        {{ getTimeFromNow(question.createdAt) }}
+      </span>
+    </li>
+  </ul>
 </template>
 
 <script>
-import QuestionItem from './QuestionItem';
-
 export default {
   name: 'Questions',
-  components: {
-    'app-question-item': QuestionItem,
-  },
   data() {
     return {
       questions: [],
-      inputQuestion: '',
-      inputTitle: '',
     };
   },
   methods: {
@@ -36,18 +37,12 @@ export default {
           this.questions = err.message;
         });
     },
-    createQuestion() {
-      this.axios.post('http://localhost:3000/question', {
-        UserId: 1,
-        title: this.inputQuestion,
-        questionContent: this.inputTitle,
-      })
-        .then(() => {
-          this.getQuestions();
-        });
+    getQuestion(id) {
+      this.$router.push(`/question/${id}`);
     },
-  },
-  computed: {
+    getTimeFromNow(time) {
+      return this.$moment(time).fromNow();
+    },
   },
   mounted() {
     this.getQuestions();
@@ -56,23 +51,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
-
-.container {
-  margin-top: 50px
-}
-
-input[type=search] {
-  width: 250px;
-}
-
-/* When the input field gets focus, change its width to 100% */
-
+<style scoped>
 h1, h2 {
   font-weight: normal;
 }
-
 
 a {
   color: #d6fffa;
