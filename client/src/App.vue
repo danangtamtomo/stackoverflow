@@ -3,12 +3,9 @@
     <keep-alive>
       <app-header></app-header>
     </keep-alive>
-    <div @afterLogin="getDashboard">
-      {{ coba }}
-    </div>
     <button type="button" @click="doLogout" v-if="isLoggedIn">Logout</button>
     <main-content v-if="isLoggedIn"></main-content>
-    <app-login v-else>Tes</app-login>
+    <app-login @afterLogin="checkLogin" v-else></app-login>
     <app-footer></app-footer>
   </div>
 </template>
@@ -37,10 +34,8 @@ export default {
     checkLogin() {
       if (localStorage.getItem('token')) {
         this.isLoggedIn = true;
-        this.checkLogin();
       } else {
         this.isLoggedIn = false;
-        this.checkLogin();
       }
     },
     doLogout() {

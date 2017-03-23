@@ -13,6 +13,7 @@ Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueMomentJS, moment);
 Vue.use(VueTinymce);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

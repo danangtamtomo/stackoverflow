@@ -26,7 +26,7 @@ export default {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
           this.$emit('afterLogin');
-          this.$router.go('/');
+//          this.$router.go('/');
         } else {
           this.message = response.data.message;
         }

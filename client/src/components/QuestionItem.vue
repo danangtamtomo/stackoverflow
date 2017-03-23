@@ -1,21 +1,21 @@
 <template>
   <router-link :to="{name: 'Question', params: {id:question.id}}">
-  <li>
-    <span class="stack-span-item">
-      <p>{{ voteCount }}</p>
-      <p>votes</p>
-    </span>
-    <span class="stack-span-item">
-            <p>{{ question.Answers.length }}</p>
-            <p>answers</p>
-          </span>
-    <span class="stack-span-item stack-span-title">
-           {{ question.title }}
-          </span>
-    <span class="stack-span-item stack-span-time">
-            {{ getTimeFromNow(question.createdAt) }}
-     </span>
-  </li>
+      <li>
+        <span class="stack-span-item">
+          <p>{{ voteCount }}</p>
+          <p>votes</p>
+        </span>
+        <span class="stack-span-item">
+                <p>{{ question.Answers.length }}</p>
+                <p>answers</p>
+              </span>
+        <span class="stack-span-item stack-span-title">
+               {{ question.title }}
+              </span>
+        <span class="stack-span-item stack-span-time">
+                {{ getTimeFromNow(question.createdAt) }}
+         </span>
+      </li>
   </router-link>
 </template>
 

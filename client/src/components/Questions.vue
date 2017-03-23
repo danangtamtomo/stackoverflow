@@ -1,6 +1,8 @@
 <template>
+  <div>
+    <input type="search" v-model="questionSearch">
   <ul>
-    <li v-for="question in questions">
+    <li v-for="question in questions" v-if="searchQuestion.test(question.title)">
       <span class="stack-span-item">
         <p>{{ question.votes }}</p>
         <p>votes</p>
@@ -17,6 +19,7 @@
       </span>
     </li>
   </ul>
+  </div>
 </template>
 
 <script>
@@ -25,6 +28,7 @@ export default {
   data() {
     return {
       questions: [],
+      questionSearch: '',
     };
   },
   methods: {
@@ -42,6 +46,11 @@ export default {
     },
     getTimeFromNow(time) {
       return this.$moment(time).fromNow();
+    },
+  },
+  computed: {
+    searchQuestion() {
+      return new RegExp(this.questionSearch, 'i');
     },
   },
   mounted() {
